@@ -8,7 +8,7 @@ This file is distinct from README.md as it is meant to discuss potential aspects
 We can utilize some of the Devo cards used in the Catan: Cities and Knights Expansion (Mobile version).
 
 * Medicine
-	* The cost of upgrading a Settlement to a City is reduced to 1 wheat and 2 ore.
+	* Upgrade a Settlement to a City for free.
 
 * Road Movement/Removal
 	* You can remove a rival's road that has a loose end (isn't connected on both ends) -OR- move one of your loose-end roads to another legitimate location.
@@ -36,6 +36,8 @@ There are more "Progress" cards that come with Cities and Knights, but these are
 ## Metropolises
 
 Another feature of Cities and Knights is the Metropolis upgrade for Cities. An idea is we can have these simply be uber cities that give one of each resource around that Metropolis if one of its hexes gets rolled. Let's say we roll an 8 on Sheep next to a Metropolis; you get 2 Sheep, but also 1 of each resource also bordering the Metropolis, so like 1 ore and 1 wheat as well.
+
+Metropolises can increase in cost the more you have so they can't be spammed. Upgrading from a City should cost like 2 of every resource, then go up by one every time you make another Metropolis.
 
 ## City Walls
 
