@@ -17,3 +17,10 @@ Intended to be device agnostic (Mobile, and Desktop)
 * Server side move validation
   * Road placement
   * Settlement Placement
+
+### Work in progress
+
+Kahtizzle is only in it's initial planning phase, with no features currently
+implemented. As development moves forward breaking changes are to be expected.
+
+Contributions (Both issues and Pull Requests) are welcome.
