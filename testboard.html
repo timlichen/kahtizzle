@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kahtizzle Board Test</title>
+		<link rel="stylesheet" type="text/css" href="testboard.css" />
+	</head>
+	<body>
+		<svg height="400" width="600">
+			<defs>
+				<pattern id="img" patternUnits="userSpaceOnUse" width="200" height="200">
+					<image xlink:href="old_sheep.jpg" x="10" width="200" height="200" />
+				</pattern>
+			</defs>
+			<!-- Working Sheep Tile -->
+			<polygon points="200,98 155,20 65,20 20,98 65,176 155,176" fill="url(#img)"/>
+			<circle cx="110" cy="98" r="30" stroke="black" stroke-width="1" fill="RGB(230,217,185)" />
+			<text fill="black">
+				<tspan x="100" y="108" font-size="40">8</tspan>
+				<tspan x="100" y="122" font-size="12">17%</tspan>
+			</text>
+		</svg>
+	</body>
+</html>
