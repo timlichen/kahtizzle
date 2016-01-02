@@ -23,7 +23,7 @@ Intended to be device agnostic (Mobile, and Desktop)
 * Server side move validation
   * Road placement
   * Settlement Placement
-* Tiles should be handled via MongoDB geospacial indexing
+* Tiles should be handled via MongoDB geospatial indexing
 * Score panel should track total victory points
   * Leaderboard should track this
     * Leaderboard can also track other neat stats such as
