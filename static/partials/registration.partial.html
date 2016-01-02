@@ -1,0 +1,14 @@
+<a href="#/login">Login</a>
+<a href="#/registration">Registration</a>
+
+<h1>Registration</h1>
+  <li ng-repeat='error in usersCtrl.errors'>
+  {{error.message}}
+</li>
+<form>
+  <input type="text" ng-model='usersCtrl.newUser.email' placeholder='email'>
+  <input type="text" ng-model='usersCtrl.newUser.password' placeholder='password'>
+  <input type="text" ng-model='usersCtrl.newUser.first_name' placeholder='first_name'>
+  <input type="text" ng-model='usersCtrl.newUser.last_name' placeholder='last_name'>
+  <input type='submit' ng-click='usersCtrl.create(usersCtrl.newUser)'>
+</form

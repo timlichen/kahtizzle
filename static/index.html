@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Index Page</title>
+  <script type="text/javascript" src="js/lib/angular.js"></script>
+  <script type="text/javascript" src="js/lib/angular-route.js"></script>
+
+  <script type="text/javascript">
+    var myAppObject  = angular.module('myApp', ['ngRoute'])
+
+    //Angular Partial Routes
+    myAppObject.config(function($routeProvider){
+      $routeProvider
+      .when('/', {
+        redirectTo: '/login'
+      })
+      .when('/login', {
+        templateUrl: 'partials/login.partial.html',
+        controller: 'SessionsController',
+        controllerAs: 'sessionsCtrl'
+      })
+      .when('/registration', {
+        templateUrl: 'partials/registration.partial.html',
+        controller: 'UsersController',
+        controllerAs: 'usersCtrl'
+      })
+      .when('/dashboard', {
+        templateUrl: 'partials/dashboard.partial.html',
+        controller: 'DashboardsController',
+        controllerAs: 'dashboardCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      })
+    })
+
+    myAppObject.controller('DashboardsController',function(SessionFactory){
+      var _this = this;
+      console.log('DashboardsController Loaded');
+      SessionFactory.authenticate()
+    })
+
+    myAppObject.controller('UsersController', function(UserFactory){
+      var _this = this;
+      console.log("UsersController Loaded...")
+      this.create = function(newUser){
+        _this.errors = {}; //CLEAN errors on each new call so old errors do no persist
+        if(newUser){
+          console.log('UsersController / creating', newUser);
+          UserFactory.create(newUser, function(errors){ //MARK
+            // console.log('Called back from UsersFactory Create');
+            console.log('###', errors);
+            //This ties it to the parent "this" instance allowing it to be displayed on the registration partial.
+            _this.errors = errors;
+          })
+        }
+      }
+    });
+
+    myAppObject.factory('UserFactory', function($http, $location){
+      var factory = {
+        create: function(newUser, callback){
+          console.log('user', newUser);
+          $http.post('/users', newUser).success(function(response){
+            console.log("server responded post('/users')", response)
+            if(response.errors){
+              //this will return an object of objects, passing back to the controller callback function on line marked line
+              callback(response.errors);
+
+            } else {
+              $location.path('/login');
+              console.log('no errors')};
+          })
+        }
+      }
+      return factory;
+    })
+
+    myAppObject.controller('SessionsController', function(SessionFactory){
+      console.log("SessionsController Loaded...")
+      var _this = this;
+      this.create = function(user){
+      // CLEANING error
+      // -- this causes an empty object when nothing is submitted --
+      // _this.error = {};
+        if(user){
+          console.log('SessionsController / create', user);
+          SessionFactory.create(user, function(user){
+            if(user.error){
+              _this.error = user.error
+            }
+            console.log('create back from factory');
+          })
+        }
+      }
+    });
+
+    myAppObject.factory('SessionFactory', function($http, $location){
+      var logged_in_user;
+      var factory = {
+
+      create: function(user, callback){
+        console.log('user', user);
+        $http.post('/sessions', user).success(function(response){
+          if(response){
+            logged_in_user = response;
+            $location.path('/dashboard')
+            callback(response);
+          }else {
+            callback({error: "Invalid Credentials"})
+          }
+        })
+      },
+
+      authenticate: function(){
+          $http.get('/authenticate').success(function(response){
+            if(!response){
+              console.log('server says no');
+              alert('You are logged out');
+              $location.path('/login');
+            }
+          })
+        }
+      }
+
+      return factory;
+    })
+
+  </script>
+</head>
+<body>
+  <h1>Index</h1>
+  <div ng-view></div>
+</body>
+</html>
