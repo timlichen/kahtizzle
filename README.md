@@ -1,4 +1,4 @@
 # kahtizzle
-an infinite game of kahtizzle
+An infinite game of kahtizzle
 
-the finest game known
+The finest game ever known
