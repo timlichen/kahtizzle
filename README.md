@@ -17,6 +17,14 @@ Intended to be device agnostic (Mobile, and Desktop)
 * Server side move validation
   * Road placement
   * Settlement Placement
+* Tiles should be handled via MongoDB geospacial indexing
+* Score panel should track total victory points
+  * Leaderboard should track this
+    * Leaderboard can also track other neat stats such as
+      * Cities or Settlements built
+      * Longest road
+* Add a lives function, if you run out of plays, expend a life to start again
+  * Spend VP to buy more lives?
 
 ### Work in progress
 
