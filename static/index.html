@@ -118,9 +118,21 @@
         };
       }
 
-      // Create all the tiles needed for a starting board
+      //////////////////////////////////////////////////////
+      // Create all the tiles needed for a starting board //
+      //////////////////////////////////////////////////////
       _this.allhexes = [];
       makeAllHexes();
+      // Organize the hexes by id, not tile type
+      _this.allhexes = _this.allhexes.sort(function (a, b) {
+        if (a.hex_id < b.hex_id) {
+          return -1;
+        } else if (a.hex_id > b.hex_id) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
 
       console.log('DashboardsController Loaded');
 
