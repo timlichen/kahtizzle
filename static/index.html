@@ -69,6 +69,20 @@
         }
       }
 
+      // Hex point coordinates of 'origin' hex that starts a row
+      // A row run lineally NE to SW
+      var row_coords = [
+        {cx: 680, cy: 78},
+        {cx: 635, cy: 0},
+        {cx: 545, cy: 0},
+        {cx: 500, cy: 78},
+        {cx: 545, cy: 156},
+        {cx: 635, cy: 156}
+      ];
+
+      var rowbgx = 497;
+      var rowbgy = 0;
+
       function makeAllHexes () {
         // Available tile ids
         var avail = [];
@@ -92,7 +106,23 @@
       }
 
       function makeHex (tile_type, id) {
-        hex = {hex_id: id, tile_type: tile_type, circle: tile_type !== 'desert' && makeCircle()};
+        hex = {
+          hex_id:    id,
+          tile_type: tile_type,
+          circle:    tile_type !== 'desert' && makeCircle(),
+          // coord, bgx, & bgy have these as default values, but they get changed anyway
+          coord: [
+            {cx: 680, cy: 78},
+            {cx: 635, cy: 0},
+            {cx: 545, cy: 0},
+            {cx: 500, cy: 78},
+            {cx: 545, cy: 156},
+            {cx: 635, cy: 156}
+          ],
+          bgx: 497,
+          bgy: 0,
+          coordinates: '680,78 635,0 545,0 500,78 545,156 635,156'
+        };
         _this.allhexes.push(hex);
       }
 
@@ -133,6 +163,47 @@
           return 0;
         }
       });
+
+      // Gives coordinates for tile positioning
+      var nth_in_row = 1;
+      for (var t = 1; t < _this.allhexes.length; t++) {
+        // For tiles that start new rows
+        if (t == 3 || t == 7 || t == 12 || t == 16) {
+          nth_in_row = 0;
+          var dx = 0;
+          var dy = 0;
+          if (t == 3 || t == 7) {
+            dx = 135;
+            dy = 78;
+          } else if (t == 12 || t == 16){
+            dx = 0;
+            dy = 156;
+          }
+          // Reset row origin
+          for (var d = 0; d < 6; d++) {
+            row_coords[d].cx += dx;
+            row_coords[d].cy += dy;
+            _this.allhexes[t].coord[d].cx = row_coords[d].cx;
+            _this.allhexes[t].coord[d].cy = row_coords[d].cy;
+          }
+          // Reset background image origin
+          rowbgx += dx;
+          rowbgy += dy;
+          _this.allhexes[t].bgx = rowbgx;
+          _this.allhexes[t].bgy = rowbgy;
+        } else {
+          // 'Regular' tiles not at the start of a row
+          // Update with proper coordinates
+          for (var d = 0; d < 6; d++) {
+            _this.allhexes[t].coord[d].cx = row_coords[d].cx - (nth_in_row * 135);
+            _this.allhexes[t].coord[d].cy = row_coords[d].cy + (nth_in_row * 78);
+          }
+          _this.allhexes[t].bgx = rowbgx - (nth_in_row * 135);
+          _this.allhexes[t].bgy = rowbgy + (nth_in_row * 78);
+        }
+        nth_in_row++;
+      }
+      // console.log(_this.allhexes);
 
       console.log('DashboardsController Loaded');
 

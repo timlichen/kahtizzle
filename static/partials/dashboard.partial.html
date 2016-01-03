@@ -8,30 +8,31 @@
 		<h1>Dashboard {{dashboardCtrl.testhex}}</h1>
 
 		<h2>Example Board (Refresh Page for new numbers)</h2>
-		<svg width="180" height="156" ng-repeat="hex in dashboardCtrl.allhexes">
-			<defs>
-				<pattern id="img" patternUnits="userSpaceOnUse" width="180" height="156">
-					<image ng-href="../images/{{hex.tile_type}}.jpg" xlink:href="" x="0" width="185" height="160" />
-				</pattern>
-				<filter id="f1" x="0" y="0">
-					<feGaussianBlur in="SourceGraphic" stdDeviation="3" />
-			    </filter>
-			</defs>
-			<!-- EXAMPLE SHEEP TILE -->
-			<polygon points="180,78 135,0 45,0 0,78 45,156 135,156" fill="url(#img)"/>
-			<g ng-if="hex.tile_type !== 'desert'">
-				<circle cx="90" cy="78" r="33" stroke="black" stroke-width="1" fill="RGB(230,217,185)" filter="url(#f1)" />
-				<!-- CENTER OF ROLL NUMBER CIRCLE -->
-				<!-- <circle cx="90" cy="78" r="1" fill="red" /> -->
-				<text fill="RGB(62,62,62)" x="90" y="58" font-size="10" text-anchor="middle" alignment-baseline="central">
-					{{hex.circle.chance}}%
-				</text>
-				<text fill="{{hex.circle.color}}" x="90" y="78" font-size="36" text-anchor="middle" alignment-baseline="central">
-					{{hex.circle.roll}}
-				</text>
-				<text fill="{{hex.circle.color}}" x="90" y="90" font-size="24" text-anchor="middle" alignment-baseline="central">
-					{{hex.circle.dots}}
-				</text>
+		<svg width="1200" height="1200">
+			<g id="{{$index}}" ng-repeat="hex in dashboardCtrl.allhexes">
+				<defs>
+					<pattern id="img" patternUnits="userSpaceOnUse" width="1200" height="1200">
+						<image ng-href="../images/{{hex.tile_type}}.jpg" xlink:href="" ng-attr-x="{{hex.bgx}}" ng-attr-y="{{hex.bgy}}" width="185" height="160" />
+					</pattern>
+					<filter id="f1" x="0" y="0">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+				    </filter>
+				</defs>
+				<!-- TILE START -->
+				<polygon ng-attr-points="{{hex.coord[0].cx}},{{hex.coord[0].cy}} {{hex.coord[1].cx}},{{hex.coord[1].cy}} {{hex.coord[2].cx}},{{hex.coord[2].cy}} {{hex.coord[3].cx}},{{hex.coord[3].cy}} {{hex.coord[4].cx}},{{hex.coord[4].cy}} {{hex.coord[5].cx}},{{hex.coord[5].cy}}" fill="url(#img)"/>
+				<g ng-if="hex.tile_type !== 'desert'">
+					<circle ng-attr-cx="{{hex.coord[0].cx - 90}}" ng-attr-cy="{{hex.coord[0].cy}}" r="33" stroke="black" stroke-width="1" fill="RGB(230,217,185)" filter="url(#f1)" />
+					<text fill="RGB(62,62,62)" ng-attr-x="{{hex.coord[0].cx - 90}}" ng-attr-y="{{hex.coord[0].cy - 20}}" font-size="10" text-anchor="middle" alignment-baseline="central">
+						{{hex.circle.chance}}%
+					</text>
+					<text fill="{{hex.circle.color}}" ng-attr-x="{{hex.coord[0].cx - 90}}" ng-attr-y="{{hex.coord[0].cy}}" font-size="36" text-anchor="middle" alignment-baseline="central">
+						{{hex.circle.roll}}
+					</text>
+					<text fill="{{hex.circle.color}}" ng-attr-x="{{hex.coord[0].cx - 90}}" ng-attr-y="{{hex.coord[0].cy + 12}}" font-size="24" text-anchor="middle" alignment-baseline="central">
+						{{hex.circle.dots}}
+					</text>
+				</g>
+				<!-- TILE END -->
 			</g>
 		</svg>
 	</body>
