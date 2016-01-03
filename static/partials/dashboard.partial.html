@@ -1,1 +1,36 @@
-<h1>Dashboard</h1>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kahtizzle Board Test</title>
+		<link rel="stylesheet" type="text/css" href="testboard.css" />
+	</head>
+	<body>
+		<h1>Dashboard {{dashboardCtrl.testhex}}</h1>
+
+		<h2>Sheep Hex Example (Refresh Page for new numbers)</h2>
+		<svg height="400" width="600">
+			<defs>
+				<pattern id="img" patternUnits="userSpaceOnUse" width="200" height="200">
+					<image xlink:href="../images/old_sheep.jpg" x="10" width="200" height="200" />
+				</pattern>
+				<filter id="f1" x="0" y="0">
+					<feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+			    </filter>
+			</defs>
+			<!-- EXAMPLE SHEEP TILE -->
+			<polygon points="200,98 155,20 65,20 20,98 65,176 155,176" fill="url(#img)"/>
+			<circle cx="110" cy="98" r="33" stroke="black" stroke-width="1" fill="RGB(230,217,185)" filter="url(#f1)" />
+			<!-- CENTER OF ROLL NUMBER CIRCLE -->
+			<!-- <circle cx="110" cy="98" r="1" fill="red" /> -->
+			<text fill="RGB(62,62,62)" x="110" y="78" font-size="10" text-anchor="middle" alignment-baseline="central">
+				{{dashboardCtrl.testhex.circle.chance}}%
+			</text>
+			<text fill="{{dashboardCtrl.testhex.getColor}}" x="110" y="98" font-size="36" text-anchor="middle" alignment-baseline="central">
+				{{dashboardCtrl.testhex.circle.number}}
+			</text>
+			<text fill="{{dashboardCtrl.testhex.getColor}}" x="110" y="110" font-size="24" text-anchor="middle" alignment-baseline="central">
+				{{dashboardCtrl.testhex.circle.dots}}
+			</text>
+		</svg>
+	</body>
+</html>

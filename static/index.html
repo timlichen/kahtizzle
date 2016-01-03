@@ -35,10 +35,45 @@
       })
     })
 
-    myAppObject.controller('DashboardsController',function(SessionFactory){
+    myAppObject.controller('DashboardsController', function(SessionFactory){
       var _this = this;
+      var hex = {};
+      function getRollNumber () {
+        var number = Math.floor((Math.random() * 11) + 2);
+        if (number === 7) {
+          return getRollNumber();
+        } else {
+          var probabilities = {
+            '2':  1,
+            '3':  2,
+            '4':  3,
+            '5':  4,
+            '6':  5,
+            '8':  5,
+            '9':  4,
+            '10': 3,
+            '11': 2,
+            '12': 1
+          };
+          var roll = probabilities[number];
+          var dotstring = '';
+          for (var i = 0; i < roll; i++) {
+            dotstring += '.';
+          }
+          console.log(dotstring);
+          return {number: number, chance: Math.round((roll/36)*100), dots: dotstring};
+        }
+      }
+
+      hex.circle = getRollNumber();
+      var num = hex.circle.number;
+      _this.testhex = hex;
+      _this.testhex.getColor = (num == 6 || num == 8) ? 'red' : 'black';
+
       console.log('DashboardsController Loaded');
-      SessionFactory.authenticate()
+
+      // Commented out temporarily so you don't have to log in every time you refresh while testing
+      // SessionFactory.authenticate();
     })
 
     myAppObject.controller('UsersController', function(UserFactory){

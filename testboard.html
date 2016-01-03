@@ -10,10 +10,13 @@
 				<pattern id="img" patternUnits="userSpaceOnUse" width="200" height="200">
 					<image xlink:href="old_sheep.jpg" x="10" width="200" height="200" />
 				</pattern>
+				<filter id="f1" x="0" y="0">
+					<feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+			    </filter>
 			</defs>
 			<!-- Working Sheep Tile -->
 			<polygon points="200,98 155,20 65,20 20,98 65,176 155,176" fill="url(#img)"/>
-			<circle cx="110" cy="98" r="30" stroke="black" stroke-width="1" fill="RGB(230,217,185)" />
+			<circle cx="110" cy="98" r="33" stroke="black" stroke-width="1" fill="RGB(230,217,185)" filter="url(#f1)" />
 			<text fill="black">
 				<tspan x="100" y="108" font-size="40">8</tspan>
 				<tspan x="100" y="122" font-size="12">17%</tspan>
