@@ -37,11 +37,48 @@
 
     myAppObject.controller('DashboardsController', function(SessionFactory){
       var _this = this;
-      var hex = {};
-      function getRollNumber () {
+      var available_tiles = {
+        sheep:  4,
+        wheat:  4,
+        wood:   4,
+        brick:  3,
+        ore:    3,
+        desert: 1,
+      };
+      var total_tiles = 19;
+
+      function makeAllHexes () {
+        // Available tile ids
+        var avail = [];
+        // Make array of all available ids (ex: [1,2,3,...,19])
+        for (var t = 1; t <= total_tiles; t++) {
+          avail.push(t);
+        }
+        // Go through all tiles by type
+        for (var tile_type in available_tiles) {
+          for (var i = 0; i < available_tiles[tile_type]; i++) {
+            // Get random available id
+            var pos = Math.floor((Math.random() * (avail.length - 1)));
+            var temp = avail[pos];
+            avail[pos] = avail[avail.length - 1];
+            avail[avail.length - 1] = temp;
+            avail.pop();
+            // Assign tile type and id to new hex
+            makeHex(tile_type, temp);
+          }
+        }
+      }
+
+      function makeHex (tile_type, id) {
+        hex = {hex_id: id, tile_type: tile_type, circle: makeCircle()};
+        _this.allhexes.push(hex);
+      }
+      
+      // Creates central circle with roll number, chance, dots, etc.
+      function makeCircle () {
         var number = Math.floor((Math.random() * 11) + 2);
         if (number === 7) {
-          return getRollNumber();
+          return makeCircle();
         } else {
           var probabilities = {
             '2':  1,
@@ -60,15 +97,18 @@
           for (var i = 0; i < roll; i++) {
             dotstring += '.';
           }
-          console.log(dotstring);
-          return {number: number, chance: Math.round((roll/36)*100), dots: dotstring};
+          return {
+            number: number,
+            color: (number == 6 || number == 8) ? 'red' : 'black',
+            chance: Math.round((roll / 36) * 100),
+            dots: dotstring
+          };
         }
       }
 
-      hex.circle = getRollNumber();
-      var num = hex.circle.number;
-      _this.testhex = hex;
-      _this.testhex.getColor = (num == 6 || num == 8) ? 'red' : 'black';
+      // Create all the tiles needed for a starting board
+      _this.allhexes = [];
+      makeAllHexes();
 
       console.log('DashboardsController Loaded');
 
