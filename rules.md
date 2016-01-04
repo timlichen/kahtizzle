@@ -171,3 +171,28 @@ In addition the island is divided by a "Dividing line" for strating territories
 * Maritime trade with the bank at the following rates
   * 4:1
   * Harbor for 3:1 or 2:1 according to normal base rules
+
+## Building
+
+* Building is simultaneous on all boards.
+  * Only the active player(s) may build.
+  * All active players are considered to be in the trading and building phase
+    simultaneously
+
+* You may build on your own board and also on the boards to your left and right
+
+* Build and move ships according to the usual *Seafarers* rules
+  * Moving 1 ship per turn, from an open shipping route
+
+* All resources being paid to build will follow game logic checks
+
+* Dividing lines cut each game board in half.
+  * The area of the island containing your starting pieces is considered your
+    starting territory
+    * For the first settlement you build on another player's starting territory
+      you earn an additional 2 victory points (ie that settlement is worth 3VP)
+    * Further settlements you build in foreign starting territories od not earn
+      you additional points
+    * This applies to all game boards
+
+
