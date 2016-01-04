@@ -215,4 +215,29 @@ In addition the island is divided by a "Dividing line" for strating territories
       play a knight card
         * You receive 1 resource card of your choice but do not move the robber.
 
+## Robbers
 
+* There is 1 robber in each starting territory, which he never leaves.
+
+* For the first 15 turns of the game, the robbers do not move.
+  * For each new player this begins and ends with their first 15 turns
+  * If a *7* is rolled, each player checks his hand size
+    * If you have 8 or more resources, discard half of your resource cards,
+      rounding down
+
+* Starting with turn 16, each time a *7* is rolled, the players check their hand
+  sizes and discard cards as necessary.
+  * Then the dice are rolled again, to determine the hexes on which the robbers
+    are placed.
+    * Each number except for *2* and *12* exist twice on each game board
+      * Once in the *sun* player's territory and once in the *moon*
+    * Each of the 2 hexes whose number was rolled is now blocked by 1 robber.
+      * if the dice roll result for the robbers is a *2* or a *12*
+        * One of the robbers blocks the corresponding hex on the game board
+        * The other robber returns to the desert in which he was placed at the
+          beginning of the game
+      * If the robbers already occupy the hexes whose number is rolled they
+        remain there.
+      * If another *7* is rolled, the robbers go back to their deserts.
+
+* After moving the robbers, you do not take a card from the other player
