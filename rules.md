@@ -145,3 +145,29 @@ In addition the island is divided by a "Dividing line" for strating territories
       * Then you may trade and build, this phase ends when the timer expires
 
 ## Trading
+
+* If you are the active player at your game board, you have 5 players you can
+  trade with
+  * The player across from you
+  * The two players at the board to your left
+  * The two players at the board to your right
+
+```
+ Inactive    Inactive    Inactive
+.----------.----------.----------.
+|        \ |     |    | /        |
+|         \|     |    |/         |
+|          \     |    /          |
+|          |\    |   /|          |
+`----------.----------.----------'
+  Active <----  You ----> Active
+```
+
+* You may trade and build in any order, as many times as you wish
+
+* If you are not the active player, you may only trade with the 3 active players
+  across from you
+
+* Maritime trade with the bank at the following rates
+  * 4:1
+  * Harbor for 3:1 or 2:1 according to normal base rules
