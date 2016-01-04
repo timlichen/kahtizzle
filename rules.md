@@ -79,3 +79,30 @@ In addition the island is divided by a "Dividing line" for strating territories
 
 * Ensure that there is a robber present on each of the 2 desert hexes at game
   start
+
+## Gameplay
+
+* All players are divided into two groups
+  * Sun
+  * Moon
+* All active players in the smae group (Either Sun or Moon) play in alternating
+  rounds, the group will be announced before each round and indicated on screen
+
+* The number of the terrain hex to produce resources will be displayed on screen
+  * This number applies to all game boards
+
+* All active players have a fixed amount of time available for their turn, which
+  they must not exceed
+  * Rounds will be 45 seconds in length
+
+* A turn always consists of 2 phases:
+  * Resource production:
+    * The dice roll result is visable on screen
+      * It applies to all players
+      * Resources are distributed automatically
+      * Logic checks ensure the resources are distributed correctly
+  * Trading and Building:
+    * You may not initiate trading until all resources are distributed.
+      * Then you may trade and build, this phase ends when the timer expires
+
+## Trading
