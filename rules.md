@@ -195,4 +195,24 @@ In addition the island is divided by a "Dividing line" for strating territories
       you additional points
     * This applies to all game boards
 
+## Development Cards
+
+* Remove the *Monopoly* development cards from the deck, these progress cards
+  are not used.
+
+* Use all other cards as you do in a regular *CATAN* or *Seafarers* game
+  * Use *Road Building* to build the following
+    * 2 roads
+    * 1 Road 1 Ship
+    * 2 ships
+
+* You can use a Knight card as follows:
+  * If a robber stands on a hex adjacent to one of your settlements/cities
+    * You can move him to your desert hex by playing a knight card
+      * You receive 1 resource card of the type produced by the hex that the
+        robber just left
+    * If no robber stands next to your settlements/cities and you nevertheless
+      play a knight card
+        * You receive 1 resource card of your choice but do not move the robber.
+
 
