@@ -72,16 +72,16 @@
       // Hex point coordinates of 'origin' hex that starts a row
       // A row run lineally NE to SW
       var row_coords = [
-        {cx: 680, cy: 78},
-        {cx: 635, cy: 0},
-        {cx: 545, cy: 0},
-        {cx: 500, cy: 78},
-        {cx: 545, cy: 156},
-        {cx: 635, cy: 156}
+        {cx: 680, cy: 128},
+        {cx: 635, cy: 50},
+        {cx: 545, cy: 50},
+        {cx: 500, cy: 128},
+        {cx: 545, cy: 206},
+        {cx: 635, cy: 206}
       ];
 
       var rowbgx = 497;
-      var rowbgy = 0;
+      var rowbgy = 50;
       var vertices_coord = [];
 
       // Create all the intersections/vertices
@@ -238,15 +238,23 @@
             vertex_id: vertex_id,
             x: x, 
             y: y, 
-            tiles: [hex_id]
+            tiles: [hex_id],
+            color: 'gray'
            });
         }
       }
-      
+
       console.log('_this.allhexes', _this.allhexes);
       console.log('_this.allvertices', _this.allvertices);
 
-
+      _this.clickVertex = function (vertex_id) {
+        console.log('CLICKED!', vertex_id);
+        for (vertex in _this.allvertices) {
+          if (_this.allvertices[vertex].vertex_id == vertex_id) {
+            _this.allvertices[vertex].color = 'white';
+          }
+        }
+      }
 
 
 
