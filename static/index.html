@@ -82,6 +82,10 @@
 
       var rowbgx = 497;
       var rowbgy = 0;
+      var vertices_coord = [];
+
+      // Create all the intersections/vertices
+      _this.allvertices = [];
 
       function makeAllHexes () {
         // Available tile ids
@@ -110,18 +114,19 @@
           hex_id:    id,
           tile_type: tile_type,
           circle:    tile_type !== 'desert' && makeCircle(),
-          // coord, bgx, & bgy have these as default values, but they get changed anyway
+          // coord, bgx, bgy, & row have these as default values, but they get changed anyway
           coord: [
-            {cx: 680, cy: 78},
-            {cx: 635, cy: 0},
-            {cx: 545, cy: 0},
-            {cx: 500, cy: 78},
-            {cx: 545, cy: 156},
-            {cx: 635, cy: 156}
+            {cx: 680, cy: 78},  // E
+            {cx: 635, cy: 0},   // NE
+            {cx: 545, cy: 0},   // NW
+            {cx: 500, cy: 78},  // W
+            {cx: 545, cy: 156}, // SW
+            {cx: 635, cy: 156}  // SE
           ],
           bgx: 497,
           bgy: 0,
-          coordinates: '680,78 635,0 545,0 500,78 545,156 635,156'
+          coordinates: '680,78 635,0 545,0 500,78 545,156 635,156',
+          row: 0
         };
         _this.allhexes.push(hex);
       }
@@ -148,6 +153,8 @@
         };
       }
 
+      
+
       //////////////////////////////////////////////////////
       // Create all the tiles needed for a starting board //
       //////////////////////////////////////////////////////
@@ -164,18 +171,23 @@
         }
       });
 
+      _this.allhexes[0].row = 1;
       // Gives coordinates for tile positioning
-      var nth_in_row = 1;
-      for (var t = 1; t < _this.allhexes.length; t++) {
+      var nth_in_row = 0;
+      var row = 1;
+
+      // Go through all tiles, remake their vertices coordinates
+      for (var t = 0; t < _this.allhexes.length; t++) {
         // For tiles that start new rows
         if (t == 3 || t == 7 || t == 12 || t == 16) {
+          row++;
           nth_in_row = 0;
           var dx = 0;
           var dy = 0;
           if (t == 3 || t == 7) {
             dx = 135;
             dy = 78;
-          } else if (t == 12 || t == 16){
+          } else if (t == 12 || t == 16) {
             dx = 0;
             dy = 156;
           }
@@ -185,6 +197,7 @@
             row_coords[d].cy += dy;
             _this.allhexes[t].coord[d].cx = row_coords[d].cx;
             _this.allhexes[t].coord[d].cy = row_coords[d].cy;
+            makeVertex(row_coords[d].cx, row_coords[d].cy, _this.allhexes[t].hex_id);
           }
           // Reset background image origin
           rowbgx += dx;
@@ -197,13 +210,46 @@
           for (var d = 0; d < 6; d++) {
             _this.allhexes[t].coord[d].cx = row_coords[d].cx - (nth_in_row * 135);
             _this.allhexes[t].coord[d].cy = row_coords[d].cy + (nth_in_row * 78);
+            makeVertex(_this.allhexes[t].coord[d].cx, _this.allhexes[t].coord[d].cy, _this.allhexes[t].hex_id);
           }
           _this.allhexes[t].bgx = rowbgx - (nth_in_row * 135);
           _this.allhexes[t].bgy = rowbgy + (nth_in_row * 78);
         }
         nth_in_row++;
+        _this.allhexes[t].row = row;
       }
-      // console.log(_this.allhexes);
+      // END tile positioning
+
+      // Add singular vertex (coordinates and hex_id) to _this.allvertices
+      function makeVertex (x, y, hex_id) {
+        var vertex_id = x + '_' + y;
+        var found = false;
+        // Check list of taken vertex coordinates
+        for (vertex in _this.allvertices) {
+          // Find the vertex object by vertex_id, add this hex to the list of touching tiles
+          if (_this.allvertices[vertex].vertex_id == vertex_id) {
+            _this.allvertices[vertex].tiles.push(hex_id);
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          _this.allvertices.push({
+            vertex_id: vertex_id,
+            x: x, 
+            y: y, 
+            tiles: [hex_id]
+           });
+        }
+      }
+      
+      console.log('_this.allhexes', _this.allhexes);
+      console.log('_this.allvertices', _this.allvertices);
+
+
+
+
+
 
       console.log('DashboardsController Loaded');
 
