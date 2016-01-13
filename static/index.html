@@ -84,8 +84,11 @@
       var rowbgy = 50;
       var vertices_coord = [];
 
-      // Create all the intersections/vertices
+      // List of all the intersections/vertices
       _this.allvertices = [];
+
+      // List of all hexes on board
+      _this.allhexes = [];
 
       function makeAllHexes () {
         // Available tile ids
@@ -158,7 +161,6 @@
       //////////////////////////////////////////////////////
       // Create all the tiles needed for a starting board //
       //////////////////////////////////////////////////////
-      _this.allhexes = [];
       makeAllHexes();
       // Organize the hexes by id, not tile type
       _this.allhexes = _this.allhexes.sort(function (a, b) {

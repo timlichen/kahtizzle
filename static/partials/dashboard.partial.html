@@ -34,7 +34,8 @@
 				</g>
 				<!-- TILE END -->
 			</g>
-			<circle ng-repeat="vertex in dashboardCtrl.allvertices" ng-attr-cx="{{vertex.x}}" ng-attr-cy="{{vertex.y}}" r="10" stroke="black" stroke-width="1" fill="{{vertex.color}}" ng-click="dashboardCtrl.clickVertex(vertex.vertex_id)" />
+			<circle ng-repeat="vertex in dashboardCtrl.allvertices" ng-attr-cx="{{vertex.x}}" ng-attr-cy="{{vertex.y}}" ng-attr-r="{{vertex.tiles.length < 3 ? (vertex.tiles.length == 1 ? 10 : 15) : 20}}" stroke="black" stroke-width="1" fill="{{vertex.color}}" ng-click="dashboardCtrl.clickVertex(vertex.vertex_id)" />
+			<text ng-repeat="vertex in dashboardCtrl.allvertices" fill="yellow" ng-attr-x="{{vertex.x}}" ng-attr-y="{{vertex.y}}" font-size="10" text-anchor="middle" alignment-baseline="central">{{vertex.tiles}}</text>
 		</svg>
 	</body>
 </html>
