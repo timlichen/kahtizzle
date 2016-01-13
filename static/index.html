@@ -90,6 +90,9 @@
       // List of all hexes on board
       _this.allhexes = [];
 
+      // List of all edges on board
+      _this.alledges = [];
+
       function makeAllHexes () {
         // Available tile ids
         var avail = [];
@@ -159,7 +162,7 @@
       
 
       //////////////////////////////////////////////////////
-      // Create all the tiles needed for a starting board //
+      // Create all the TILES needed for a starting board //
       //////////////////////////////////////////////////////
       makeAllHexes();
       // Organize the hexes by id, not tile type
@@ -199,7 +202,7 @@
             row_coords[d].cy += dy;
             _this.allhexes[t].coord[d].cx = row_coords[d].cx;
             _this.allhexes[t].coord[d].cy = row_coords[d].cy;
-            makeVertex(row_coords[d].cx, row_coords[d].cy, _this.allhexes[t].hex_id);
+            makeAllVertices(row_coords[d].cx, row_coords[d].cy, _this.allhexes[t].hex_id);
           }
           // Reset background image origin
           rowbgx += dx;
@@ -212,7 +215,7 @@
           for (var d = 0; d < 6; d++) {
             _this.allhexes[t].coord[d].cx = row_coords[d].cx - (nth_in_row * 135);
             _this.allhexes[t].coord[d].cy = row_coords[d].cy + (nth_in_row * 78);
-            makeVertex(_this.allhexes[t].coord[d].cx, _this.allhexes[t].coord[d].cy, _this.allhexes[t].hex_id);
+            makeAllVertices(_this.allhexes[t].coord[d].cx, _this.allhexes[t].coord[d].cy, _this.allhexes[t].hex_id);
           }
           _this.allhexes[t].bgx = rowbgx - (nth_in_row * 135);
           _this.allhexes[t].bgy = rowbgy + (nth_in_row * 78);
@@ -222,8 +225,11 @@
       }
       // END tile positioning
 
+      /////////////////////////////////////////////////////////
+      // Create all the VERTICES needed for a starting board //
+      /////////////////////////////////////////////////////////
       // Add singular vertex (coordinates and hex_id) to _this.allvertices
-      function makeVertex (x, y, hex_id) {
+      function makeAllVertices (x, y, hex_id) {
         var vertex_id = x + '_' + y;
         var found = false;
         // Check list of taken vertex coordinates
@@ -246,8 +252,40 @@
         }
       }
 
+      //////////////////////////////////////////////////////
+      // Create all the EDGES needed for a starting board //
+      //////////////////////////////////////////////////////
+      makeAllEdges();
+      function makeAllEdges () {
+        for (hex in _this.allhexes) {
+          var _h = _this.allhexes[hex];
+          for (var h = 0; h < 5; h++) {
+            makeEdge(_h.coord[h], _h.coord[h + 1]);
+          }
+          makeEdge(_h.coord[5], _h.coord[0]);
+        }
+        function makeEdge (a, b) {
+          var end_a = a.cx + ',' + a.cy;
+          var end_b = b.cx + ',' + b.cy;
+          // Need ordered coords, otherwise duplicate edges may register under difference ids
+          var edge_id = a.cx < b.cx ? end_a + '_' + end_b : end_b + '_' + end_a;
+          for (var i = 0; i < _this.alledges.length; i++) {
+            if (_this.alledges[i].edge_id == edge_id) {
+              return -1;
+            }
+          }
+          _this.alledges.push({
+            edge_id: end_a + '_' + end_b,
+            end_a: {xy: end_a, obj: false},
+            end_b: {xy: end_b, obj: false},
+            owner: false
+          });
+        }
+      }
+
       console.log('_this.allhexes', _this.allhexes);
       console.log('_this.allvertices', _this.allvertices);
+      console.log('_this.alledges', _this.alledges);
 
       _this.clickVertex = function (vertex_id) {
         console.log('CLICKED!', vertex_id);
