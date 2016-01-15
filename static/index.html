@@ -242,6 +242,7 @@
           }
         }
         if (!found) {
+          // Push single VERTEX
           _this.allvertices.push({
             vertex_id: vertex_id,
             x: x, 
@@ -274,11 +275,15 @@
               return -1;
             }
           }
+          // Push single EDGE
           _this.alledges.push({
             edge_id: end_a + '_' + end_b,
             end_a: {string: end_a, x: a.cx, y: a.cy, obj: false},
             end_b: {string: end_b, x: b.cx, y: b.cy, obj: false},
-            owner: false
+            owner: false,
+            color: 'RGB(252,210,9)',
+            hovered: false,
+            clicked: false
           });
         }
       }
@@ -295,7 +300,9 @@
           }
         }
       }
-
+      _this.alarm = function (ob) {
+        console.log('YUGIOH', ob);
+      }
 
 
 

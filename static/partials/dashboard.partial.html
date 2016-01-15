@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Kahtizzle Board Test</title>
-		<!-- <link rel="stylesheet" type="text/css" href="testboard.css" /> -->
+		<link rel="stylesheet" type="text/css" href="../less/board.css" />
 	</head>
 	<body>
 		<h1>Dashboard</h1>
@@ -35,7 +35,21 @@
 				<!-- TILE END -->
 			</g>
 			<!-- with SVG, DOM order decides z-index -->
-			<line ng-repeat="edge in dashboardCtrl.alledges" ng-attr-x1="{{edge.end_a.x}}" ng-attr-y1="{{edge.end_a.y}}" ng-attr-x2="{{edge.end_b.x}}" ng-attr-y2="{{edge.end_b.y}}" style="stroke:brown;stroke-width:5;opacity:1;" />
+			<line class="road_railing" ng-show="edge.clicked" ng-repeat="edge in dashboardCtrl.alledges" ng-attr-x1="{{edge.end_a.x}}" ng-attr-y1="{{edge.end_a.y}}" ng-attr-x2="{{edge.end_b.x}}" ng-attr-y2="{{edge.end_b.y}}" />
+			<line class="edge" ng-class="{'edge_hovered': edge.hovered && !edge.clicked, 'edge_clicked': edge.clicked}" ng-repeat="edge in dashboardCtrl.alledges" ng-attr-x1="{{edge.end_a.x}}" ng-attr-y1="{{edge.end_a.y}}" ng-attr-x2="{{edge.end_b.x}}" ng-attr-y2="{{edge.end_b.y}}" style="stroke:{{edge.color}};" />
+			<!-- Edge wrapper extends area needed for mouse events on edges (ease of access) -->
+			<line 
+				ng-mouseenter="edge.hovered = true" 
+				ng-mouseout="edge.hovered = false" 
+				ng-click="edge.clicked = true; edge.owner = 'Uly'; edge.color = 'blue'; dashboardCtrl.alarm(edge)"
+				class="edge_wrap" 
+				ng-repeat="edge in dashboardCtrl.alledges" 
+				ng-attr-x1="{{edge.end_a.x}}" 
+				ng-attr-y1="{{edge.end_a.y}}" 
+				ng-attr-x2="{{edge.end_b.x}}" 
+				ng-attr-y2="{{edge.end_b.y}}" 
+				style="stroke:gray;" 
+			/>
 			<circle ng-repeat="vertex in dashboardCtrl.allvertices" ng-attr-cx="{{vertex.x}}" ng-attr-cy="{{vertex.y}}" ng-attr-r="{{vertex.tiles.length < 3 ? (vertex.tiles.length == 1 ? 10 : 15) : 20}}" stroke="black" stroke-width="1" fill="{{vertex.color}}" ng-click="dashboardCtrl.clickVertex(vertex.vertex_id)" />
 			<text ng-repeat="vertex in dashboardCtrl.allvertices" fill="yellow" ng-attr-x="{{vertex.x}}" ng-attr-y="{{vertex.y - 5}}" font-size="10" text-anchor="middle" alignment-baseline="central">{{vertex.tiles}}</text>
 			<text ng-repeat="vertex in dashboardCtrl.allvertices" fill="blue" ng-attr-x="{{vertex.x}}" ng-attr-y="{{vertex.y + 5}}" font-size="10" text-anchor="middle" alignment-baseline="central">{{vertex.vertex_id}}</text>
